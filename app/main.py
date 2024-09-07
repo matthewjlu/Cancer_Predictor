@@ -7,44 +7,97 @@ import numpy as np
 from io import StringIO
 
 
+
 def main():
     st.set_page_config(
-        page_title = "Breast Cancer Predictor",
-        page_icon = ":female-doctor:",
+        page_title = "Cancer Predictor App",
         layout = "wide",
         initial_sidebar_state = "expanded"
     )
 
-    with st.container():
-        #creates h1 header
-        st.title("Breast Cancer Predictor")
-        #creates paragraph element
-        st.write("Please connect this app to a lab! This is not medical advice." 
-                 " You can use text box to update the parameters and the"
-                 " predictions will all be made through a logistic regression"
-                 " model.")
-    
+    page = st.sidebar.selectbox("Select a page", ["Landing Page", "Cancer Data Analysis", "Upload Lab Data"])
 
-    #creates two columns where the first column is 4 times as big as the second
-    col1, col2, col3, col4 = st.columns([1, 2, 1, 1])
+    if page == "Landing Page":
+        with st.container():
+            #use html and css to make title
+            st.markdown("""
+                <style>
+                .title {
+                    font-size:70px !important;
+                    font-family: 'Georgia', serif;
+                    background-image: linear-gradient(to bottom, red 40%, pink 70%, white 100%);
+                    -webkit-background-clip: text; 
+                    -webkit-text-fill-color: transparent;
+                }
+                .subtitle {
+                    font-size:20px !important;
+                    font-family: 'Georgia', serif;
+                    color: white;  
+                }
+                </style>
+                """, unsafe_allow_html=True)
 
-    with col1: 
-        input_data = add_sidebar()
-
-    with col2:
-        radar_chart = get_radar_chart(input_data)
-        st.plotly_chart(radar_chart)
-
-    with col3:
-       add_predictions(input_data)
-
-    with col4:
-        uploaded_file = st.file_uploader(
-            "Upload Cancer Data", accept_multiple_files=True
-        )
+            st.markdown('<p class="title">Cancer Prediction Application</p>', 
+                unsafe_allow_html=True)
+            
+            st.markdown(
+                '''<p class="subtitle"> Please connect this app to a lab! 
+                This is not medical advice. You have the option to either input 
+                data manually or by uploading a csv file. </p>''', 
+                unsafe_allow_html=True)
+            
         
-        for uploaded_file in uploaded_file:
-            bytes_data = uploaded_file.read()
+        gif_path = "misc/graphics.gif"
+        st.image(gif_path, use_column_width=True)
+            
+
+    elif page == "Cancer Data Analysis":
+
+        with st.container():
+            #creates h1 header
+            st.title("Breast Cancer Predictor")
+            #creates paragraph element
+            st.write(" You can use text box to update the parameters and the"
+                    " predictions will all be made through a logistic regression"
+                    " model.")
+        
+
+        #creates two columns where the first column is 4 times as big as the second
+        col1, col2, col3 = st.columns([1, 2, 1])
+
+        with col1: 
+            input_data = add_sidebar()
+
+        with col2:
+            radar_chart = get_radar_chart(input_data)
+            st.plotly_chart(radar_chart)
+
+        with col3:
+            add_predictions(input_data)
+
+
+    else:
+        with st.container():
+            #creates h1 header
+            st.title("Lab Data")
+            #creates paragraph element
+            st.write("You can upload lab data here! It will output a csv file" 
+                    " that tells you if each diagnosis is benign or malicious. ")
+            
+        uploaded_files = st.file_uploader(
+            "Upload Cancer Data", accept_multiple_files=True, type = ["csv"]
+            )
+            
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                #make a df out of the uploaded file
+                df = pd.read_csv(uploaded_file)
+                #show the data frame
+                st.write(f"Data from {uploaded_file.name}:")
+                st.write(df)
+        else:
+            st.write("Please upload a CSV file.")
+
 
 
 def add_sidebar():

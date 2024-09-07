@@ -10,6 +10,7 @@ import pickle
 #every time someone runs the app (we will write a binary file)
 def main():
     data = get_clean_data()
+
     #no label
     features = data.drop(['diagnosis'], axis = 1)
     columns = features.columns
