@@ -26,10 +26,10 @@ def main():
     
 
     #creates two columns where the first column is 4 times as big as the second
-    col1, col2, col3 = st.columns([2, 2, 1])
+    col1, col2, col3, col4 = st.columns([1, 2, 1, 1])
 
     with col1: 
-         input_data = add_sidebar()
+        input_data = add_sidebar()
 
     with col2:
         radar_chart = get_radar_chart(input_data)
@@ -37,6 +37,15 @@ def main():
 
     with col3:
        add_predictions(input_data)
+
+    with col4:
+        uploaded_file = st.file_uploader(
+            "Upload Cancer Data", accept_multiple_files=True
+        )
+        
+        for uploaded_file in uploaded_file:
+            bytes_data = uploaded_file.read()
+
 
 def add_sidebar():
 
