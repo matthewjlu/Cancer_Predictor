@@ -26,7 +26,7 @@ def main():
     
 
     #creates two columns where the first column is 4 times as big as the second
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([2, 2, 1])
 
     with col1: 
          input_data = add_sidebar()
