@@ -52,7 +52,6 @@ def main():
             
 
     elif page == "Cancer Data Analysis":
-
         with st.container():
             #creates h1 header
             st.title("Breast Cancer Predictor")
@@ -102,11 +101,11 @@ def main():
 
 def add_sidebar():
 
-    with open("model/slider_labels.pkl", "rb") as slider_file:
+    with open("model/pickle_folder/slider_labels.pkl", "rb") as slider_file:
         slider_labels = pickle.load(slider_file)
-    with open("model/max_values.pkl", "rb") as max_file:
+    with open("model/pickle_folder/max_values.pkl", "rb") as max_file:
         max_values = pickle.load(max_file)
-    with open("model/mean_values.pkl", "rb") as mean_file:
+    with open("model/pickle_folder/mean_values.pkl", "rb") as mean_file:
         mean_values = pickle.load(mean_file)
     
     #creating pair where key = column name in data, value = text value
@@ -127,7 +126,7 @@ def add_sidebar():
     return input_dict
 
 def scaled_values(input_dict):
-    with open("model/features.pkl", "rb") as feature_file:
+    with open("model/pickle_folder/features.pkl", "rb") as feature_file:
         X = pickle.load(feature_file)
     
     scaled_dict = {}
@@ -194,9 +193,9 @@ def get_radar_chart(input_data):
     return fig
 
 def add_predictions(input_data):
-    with open("model/model.pkl", "rb") as model_file:
+    with open("model/pickle_folder/model.pkl", "rb") as model_file:
         model = pickle.load(model_file)
-    with open("model/scaler.pkl", "rb") as scaler_file:
+    with open("model/pickle_folder/scaler.pkl", "rb") as scaler_file:
         scaler = pickle.load(scaler_file)
 
     input_array = np.array(list(input_data.values())).reshape(1, -1)

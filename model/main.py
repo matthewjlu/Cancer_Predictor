@@ -20,19 +20,19 @@ def main():
     model, scaler, X_train, X_test, y_train, y_test = create_model(data)
     #test_model(model, X_train, X_test, y_train, y_test)
 
-    with open('model/model.pkl', 'wb') as f:
+    with open('model/pickle_folder/model.pkl', 'wb') as f:
         pickle.dump(model, f)
-    with open('model/scaler.pkl', 'wb') as f:
+    with open('model/pickle_folder/scaler.pkl', 'wb') as f:
         pickle.dump(scaler, f)
-    with open('model/column_names.pkl', 'wb') as f:
+    with open('model/pickle_folder/column_names.pkl', 'wb') as f:
         pickle.dump(columns, f)
-    with open('model/max_values.pkl', 'wb') as f:
+    with open('model/pickle_folder/max_values.pkl', 'wb') as f:
         pickle.dump(max_column_values, f)
-    with open('model/slider_labels.pkl', 'wb') as f:
+    with open('model/pickle_folder/slider_labels.pkl', 'wb') as f:
         pickle.dump(slider_labels, f)
-    with open('model/mean_values.pkl', 'wb') as f:
+    with open('model/pickle_folder/mean_values.pkl', 'wb') as f:
         pickle.dump(mean_column_values, f)
-    with open('model/features.pkl', 'wb') as f:
+    with open('model/pickle_folder/features.pkl', 'wb') as f:
         pickle.dump(features, f)
 
 #Removing the null values out of my dataset and returning the data
